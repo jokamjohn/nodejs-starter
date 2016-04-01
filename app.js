@@ -1,22 +1,36 @@
 
 var http = require('http');
 
-var username = "chalkers"
+//Dummy Api.
+// var root = 'http://jsonplaceholder.typicode.com';
 
-var request = http.get('http://www.google.com/index.html', (response) => {
+var root = 'http://188.166.152.118';
+
+// var photos = root + '/comments'; 
+
+var messages = root + '/messages.json';
+
+var request = http.get(messages, (response) => {
   console.log(response.statusCode);
   // consume response body
   var body = "";
   
   response.on('data', function (chuck) {
       //Add up all the body parts.
-      body += chuck;
-      
-    console.log("BODY: " + body)
+      body += chuck;  
+          
+});
+
+response.on('end', function () {
     
-    //tye of the body
-    console.log(typeof body)
-})
+        var json = JSON.parse(body);
+    
+        console.dir(json);   
+        
+        //tye of the body
+        console.log(typeof json);    
+   });
+   
   response.resume();
 });
 
